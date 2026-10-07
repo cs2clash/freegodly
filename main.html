@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Godly Gratuit MM2 — Démo</title>
+<style>
+  :root{
+    --bg:#0e1013;
+    --bait-red:#e6342e;
+    --bait-yellow:#ffcf3f;
+    --bait-green:#2ecf6b;
+    --panel:#17191d;
+    --panel-2:#1f2226;
+    --text:#f2f1ea;
+    --muted:#9a9ea6;
+    --safe:#2ecf6b;
+    --warn:#ff5c5c;
+    padding-top:env(safe-area-inset-top,0px);
+    padding-bottom:env(safe-area-inset-bottom,0px);
+    box-sizing:border-box;
+  }
+  *{box-sizing:border-box;}
+  html,body{height:100%;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--text);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    overflow-x:hidden;
+  }
+  .wrap{max-width:560px;margin:0 auto;padding:28px 18px 60px;}
+
+  /* ---- BAIT VIEW ---- */
+  #bait{display:block;}
+  .siren{
+    background:repeating-linear-gradient(135deg,var(--bait-red) 0 14px,#1a0d0d 14px 28px);
+    color:#fff;
+    text-align:center;
+    font-weight:800;
+    font-size:13px;
+    letter-spacing:.3px;
+    padding:8px 10px;
+    border-radius:8px;
+    margin-bottom:18px;
+  }
+  .hero{
+    text-align:center;
+    margin-bottom:22px;
+  }
+  .hero .tag{
+    display:inline-block;
+    background:var(--bait-yellow);
+    color:#241a00;
+    font-weight:800;
+    font-size:12px;
+    padding:4px 10px;
+    border-radius:20px;
+    margin-bottom:12px;
+  }
+  .hero h1{
+    font-size:clamp(28px,8vw,40px);
+    line-height:1.08;
+    margin:0 0 10px;
+    font-weight:900;
+  }
+  .hero h1 span{color:var(--bait-green);}
+  .hero p{
+    color:var(--muted);
+    font-size:15px;
+    margin:0 auto;
+    max-width:380px;
+  }
+  .clock{
+    text-align:center;
+    margin:20px 0;
+    font-variant-numeric:tabular-nums;
+  }
+  .clock .num{
+    font-size:30px;
+    font-weight:900;
+    color:var(--bait-red);
+  }
+  .clock .lbl{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;}
+
+  .fakegodly{
+    background:linear-gradient(180deg,#2a1140,#120719);
+    border:1px solid #4a2370;
+    border-radius:14px;
+    padding:20px;
+    text-align:center;
+    margin:20px 0;
+  }
+  .fakegodly .blade{
+    font-size:46px;
+    filter:drop-shadow(0 0 14px #b14bff);
+  }
+  .fakegodly .name{
+    font-weight:900;
+    font-size:18px;
+    background:linear-gradient(90deg,#ff5fd3,#8b5cff,#5fc9ff);
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+    margin-top:6px;
+  }
+
+  .testimonials{margin:22px 0;display:flex;flex-direction:column;gap:10px;}
+  .t-item{
+    background:var(--panel);
+    border-radius:10px;
+    padding:10px 12px;
+    font-size:13px;
+    color:#d8d8d8;
+    display:flex;
+    gap:10px;
+    align-items:center;
+  }
+  .t-item .av{
+    width:28px;height:28px;border-radius:50%;
+    background:var(--bait-green);flex:none;
+  }
+  .t-item .stars{color:var(--bait-yellow);font-size:11px;display:block;}
+
+  .cta{
+    display:block;
+    width:100%;
+    border:none;
+    background:var(--bait-red);
+    color:#fff;
+    font-weight:800;
+    font-size:16px;
+    padding:16px;
+    border-radius:12px;
+    cursor:pointer;
+    margin-top:22px;
+  }
+  .cta:active{transform:scale(.98);}
+  .counter-note{
+    text-align:center;
+    font-size:12px;
+    color:var(--bait-red);
+    margin-top:8px;
+    font-weight:700;
+  }
+
+  /* ---- LOGIN VIEW ---- */
+  #loginview{display:none;}
+  .login-card{
+    background:var(--panel);
+    border-radius:16px;
+    padding:28px 22px;
+    margin-top:40px;
+  }
+  .rbx-logo{
+    text-align:center;
+    font-weight:900;
+    font-size:22px;
+    letter-spacing:.5px;
+    color:#fff;
+    margin-bottom:4px;
+  }
+  .rbx-logo .sq{
+    display:inline-block;
+    width:16px;height:16px;
+    background:var(--bait-red);
+    border-radius:3px;
+    margin-right:6px;
+    vertical-align:-2px;
+  }
+  .login-sub{
+    text-align:center;
+    color:var(--muted);
+    font-size:13px;
+    margin-bottom:22px;
+  }
+  label{
+    display:block;
+    font-size:12px;
+    color:var(--muted);
+    margin:14px 0 6px;
+  }
+  input{
+    width:100%;
+    background:#0f1114;
+    border:1px solid #2b2e33;
+    border-radius:8px;
+    padding:12px 14px;
+    color:var(--text);
+    font-size:15px;
+  }
+  input:focus{outline:2px solid var(--bait-green);outline-offset:1px;}
+  .login-btn{
+    width:100%;
+    margin-top:22px;
+    background:var(--bait-green);
+    color:#07210f;
+    border:none;
+    font-weight:800;
+    font-size:15px;
+    padding:14px;
+    border-radius:10px;
+    cursor:pointer;
+  }
+  .back{
+    display:block;
+    text-align:center;
+    margin-top:16px;
+    color:var(--muted);
+    font-size:13px;
+    background:none;
+    border:none;
+    cursor:pointer;
+    text-decoration:underline;
+  }
+
+  /* ---- REVEAL VIEW ---- */
+  #reveal{display:none;}
+  .reveal-head{
+    text-align:center;
+    margin-bottom:26px;
+  }
+  .reveal-head .mark{
+    font-size:40px;
+    margin-bottom:10px;
+  }
+  .reveal-head h2{
+    font-size:24px;
+    margin:0 0 8px;
+    font-weight:900;
+    color:var(--warn);
+  }
+  .reveal-head p{
+    color:var(--muted);
+    font-size:14px;
+    line-height:1.55;
+    max-width:420px;
+    margin:0 auto;
+  }
+  .safe-note{
+    background:#0f2a1c;
+    border:1px solid #1d5c3b;
+    color:var(--safe);
+    font-size:13px;
+    padding:12px 14px;
+    border-radius:10px;
+    margin:18px 0 26px;
+    text-align:center;
+    font-weight:600;
+  }
+  .flags{
+    background:var(--panel);
+    border-radius:14px;
+    padding:4px 18px;
+    margin-bottom:18px;
+  }
+  .flags h3{
+    font-size:13px;
+    text-transform:uppercase;
+    letter-spacing:.5px;
+    color:var(--muted);
+    margin:18px 0 2px;
+  }
+  .flag{
+    display:flex;
+    gap:10px;
+    padding:12px 0;
+    border-bottom:1px solid #2a2d32;
+  }
+  .flag:last-child{border-bottom:none;}
+  .flag .n{
+    flex:none;
+    width:22px;height:22px;
+    border-radius:50%;
+    background:var(--warn);
+    color:#1a0505;
+    font-weight:800;
+    font-size:12px;
+    display:flex;align-items:center;justify-content:center;
+  }
+  .flag .t{font-size:13.5px;line-height:1.5;color:#dcdcdc;}
+  .flag .t b{color:#fff;}
+
+  .tips{
+    background:var(--panel-2);
+    border-radius:14px;
+    padding:18px;
+    margin-top:18px;
+  }
+  .tips h3{
+    margin:0 0 10px;
+    font-size:14px;
+    color:var(--safe);
+  }
+  .tips ul{
+    margin:0;padding-left:18px;
+    font-size:13.5px;
+    color:#d4d4d4;
+    line-height:1.7;
+  }
+  .replay{
+    display:block;
+    width:100%;
+    margin-top:24px;
+    background:var(--panel);
+    border:1px solid #333;
+    color:var(--text);
+    font-weight:700;
+    font-size:14px;
+    padding:13px;
+    border-radius:10px;
+    cursor:pointer;
+  }
+
+  @media (prefers-color-scheme: light){
+    :root{ }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- BAIT -->
+  <div id="bait">
+    <div class="siren">⚠ OFFRE LIMITÉE — PLUS QUE QUELQUES ITEMS DISPONIBLES ⚠</div>
+
+    <div class="hero">
+      <span class="tag">100% GRATUIT · 2026</span>
+      <h1>Reçois un <span>Godly</span> MM2 gratuit en 30 secondes</h1>
+      <p>Connecte-toi avec ton compte Roblox pour vérifier ton éligibilité et recevoir ton item instantanément.</p>
+    </div>
+
+    <div class="clock">
+      <span class="num" id="mm">04</span><span class="num">:</span><span class="num" id="ss">59</span>
+      <div class="lbl">Temps restant avant la fin de l'offre</div>
+    </div>
+
+    <div class="fakegodly">
+      <div class="blade">🗡️</div>
+      <div class="name">Chroma Godly Darkbringer</div>
+    </div>
+
+    <div class="testimonials">
+      <div class="t-item"><div class="av"></div><div><span class="stars">★★★★★</span>xXShadowBladeXx — "j'ai reçu le mien en 1 minute !!"</div></div>
+      <div class="t-item"><div class="av"></div><div><span class="stars">★★★★★</span>murder_queen22 — "incroyable, ça marche vraiment"</div></div>
+      <div class="t-item"><div class="av"></div><div><span class="stars">★★★★★</span>Tobi_mm2 — "merci !! trop stylé"</div></div>
+    </div>
+
+    <button class="cta" onclick="showLogin()">Se connecter avec Roblox</button>
+    <div class="counter-note">⚡ 847 joueurs ont déjà reçu le leur aujourd'hui</div>
+  </div>
+
+  <!-- LOGIN -->
+  <div id="loginview">
+    <div class="login-card">
+      <div class="rbx-logo"><span class="sq"></span>ROBLOX</div>
+      <div class="login-sub">Connecte-toi pour vérifier ton éligibilité</div>
+
+      <form id="loginform" autocomplete="off">
+        <label for="u">Nom d'utilisateur ou e-mail</label>
+        <input type="text" id="u" name="u" placeholder="TonPseudoRoblox" autocomplete="off">
+
+        <label for="p">Mot de passe</label>
+        <input type="password" id="p" name="p" placeholder="••••••••" autocomplete="off">
+
+        <button type="submit" class="login-btn">Connexion</button>
+      </form>
+      <button class="back" onclick="showBait()">← Retour</button>
+    </div>
+  </div>
+
+  <!-- REVEAL -->
+  <div id="reveal">
+    <div class="reveal-head">
+      <div class="mark">🛑</div>
+      <h2>C'était un faux site</h2>
+      <p>Si ce site avait été réel, ton identifiant et ton mot de passe Roblox viendraient d'être envoyés à quelqu'un d'autre. C'est exactement comme ça que fonctionnent les vraies arnaques au "Godly gratuit".</p>
+    </div>
+
+    <div class="safe-note" id="safenote">Rassure-toi : ceci est une démo. Rien n'a été enregistré, envoyé ou stocké nulle part.</div>
+
+    <div class="flags">
+      <h3>Ce que tu viens de voir</h3>
+      <div class="flag"><div class="n">1</div><div class="t"><b>Urgence artificielle</b> — un compte à rebours et "plus que quelques items" pour te pousser à agir vite, sans réfléchir.</div></div>
+      <div class="flag"><div class="n">2</div><div class="t"><b>Un cadeau trop beau</b> — les items rares comme les Godly ne se donnent jamais gratuitement en dehors du jeu officiel.</div></div>
+      <div class="flag"><div class="n">3</div><div class="t"><b>Faux avis</b> — les commentaires "ça marche !!" sont inventés pour te rassurer et te faire baisser ta garde.</div></div>
+      <div class="flag"><div class="n">4</div><div class="t"><b>Une page de connexion qui n'est pas Roblox</b> — même si elle y ressemble, l'adresse du site n'est jamais roblox.com.</div></div>
+      <div class="flag"><div class="n">5</div><div class="t"><b>On te demande ton mot de passe ailleurs que sur le vrai site</b> — c'est le seul but réel de ce genre de page.</div></div>
+    </div>
+
+    <div class="tips">
+      <h3>Comment te protéger</h3>
+      <ul>
+        <li>Ne te connecte jamais à Roblox ailleurs que sur roblox.com, dans l'appli officielle.</li>
+        <li>Aucun site, aucune personne, aucun "giveaway" ne peut légitimement te demander ton mot de passe.</li>
+        <li>Les items rares s'obtiennent seulement via le jeu, les trades entre joueurs ou la boutique officielle.</li>
+        <li>Si tu as déjà entré ton mot de passe sur un site douteux, change-le immédiatement sur roblox.com.</li>
+        <li>Parles-en à un adulte de confiance si un site ou une personne t'a demandé tes identifiants.</li>
+      </ul>
+    </div>
+
+    <button class="replay" onclick="showBait()">Revoir la démo</button>
+  </div>
+
+</div>
+
+<script>
+  function showBait(){
+    document.getElementById('bait').style.display='block';
+    document.getElementById('loginview').style.display='none';
+    document.getElementById('reveal').style.display='none';
+    window.scrollTo(0,0);
+  }
+  function showLogin(){
+    document.getElementById('bait').style.display='none';
+    document.getElementById('loginview').style.display='block';
+    document.getElementById('reveal').style.display='none';
+    window.scrollTo(0,0);
+  }
+  function showReveal(){
+    document.getElementById('bait').style.display='none';
+    document.getElementById('loginview').style.display='none';
+    document.getElementById('reveal').style.display='block';
+    window.scrollTo(0,0);
+  }
+
+  // Fake countdown, purely cosmetic
+  let m=4, s=59;
+  setInterval(()=>{
+    if(s===0){ if(m===0){m=4;s=59;} else {m--; s=59;} } else { s--; }
+    document.getElementById('mm').textContent = String(m).padStart(2,'0');
+    document.getElementById('ss').textContent = String(s).padStart(2,'0');
+  },1000);
+
+  // CRITICAL: the form never reads, stores, logs or transmits the values.
+  // We intercept submit, clear the inputs immediately, and never touch
+  // event.target.value outside of this clearing step.
+  document.getElementById('loginform').addEventListener('submit', function(e){
+    e.preventDefault();
+    this.reset(); // discard whatever was typed, nothing is read or kept
+    showReveal();
+  });
+</script>
+</body>
+</html>
